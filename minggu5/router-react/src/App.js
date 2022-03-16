@@ -1,39 +1,14 @@
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
 import React from 'react';
 import{
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useParams,
+  useRouteMatch
 } from "react-router-dom";
 
-export default function BasicExample(){
+export default function NestingExample(){
   return(
     <Router>
       <div>
@@ -42,10 +17,7 @@ export default function BasicExample(){
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/topics">Topics</Link>
           </li>
         </ul>
         <hr />
@@ -53,12 +25,9 @@ export default function BasicExample(){
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
+          <Route path="/topics">
+            <Topics />
+          </Route>       
         </Switch>
       </div>
     </Router>
@@ -73,18 +42,135 @@ function Home(){
   );
 }
 
-function About(){
+function Topics(){
+  let {path, url} = useRouteMatch();
   return(
     <div>
-      <h2>About</h2>
+      <h2>Topics</h2>
+      <ul>
+        <li>
+          <link to={`${url}/Sate, Nasi Goreng`}>Kuliner</link>
+        </li>
+        <li>
+          <link to={`${url}/Wisata alam, Museum`}>Travelling</link>
+        </li>
+        <li>
+          <link to={`${url}/Ibis, JW Marriot`}>Review Hotel</link>
+        </li>
+      </ul>
+      <Switch>
+        <Route exact path={path}>
+          <h3>Please select a topic.</h3>
+        </Route>
+        <Route path={`${path}/topicId`}>
+          <Topics />
+        </Route>
+      </Switch>
     </div>
   );
 }
 
-function Dashboard(){
+function Topic(){
+  let {topicId} = useParams();
   return(
     <div>
-      <h2>Dashboard</h2>
+      <h3>{topicId}</h3>
     </div>
-  );
+  )
 }
+// URL parameter
+
+// export default function paramsExample(){
+//   return(
+//     <Router>
+//       <div>
+//         <ul>
+//           <li>
+//             <Link to="/netflix">Netflix</Link>
+//           </li>
+//           <li>
+//             <Link to="/gmail">Gmail</Link>
+//           </li>
+//           <li>
+//             <Link to="/yahoo">Yahoo</Link>
+//           </li>
+//           <li>
+//             <Link to="/amazon">Amazon</Link>
+//           </li>
+//         </ul>
+        
+//         <Switch>
+//           <Route path="/:id" children={<Child />}></Route>
+//         </Switch>
+//       </div>
+//     </Router>
+//   );
+// }
+
+// function Child(){
+//   let {id} = useParams();
+//   return(
+//     <div>
+//       <h3>ID: {id}</h3>
+//     </div>
+//   );
+// }
+
+// BASIC ROUTE
+
+// export default function BasicExample(){
+//   return(
+//     <Router>
+//       <div>
+//         <ul>
+//           <li>
+//             <Link to="/">Home</Link>
+//           </li>
+//           <li>
+//             <Link to="/about">About</Link>
+//           </li>
+//           <li>
+//             <Link to="/dashboard">Dashboard</Link>
+//           </li>
+//         </ul>
+//         <hr />
+//         <Switch>
+//           <Route exact path="/">
+//             <Home />
+//           </Route>
+//           <Route path="/about">
+//             <About />
+//           </Route>
+//           <Route path="/dashboard">
+//             <Dashboard />
+//           </Route>
+//         </Switch>
+//       </div>
+//     </Router>
+//   );
+// }
+
+// function Home(){
+//   return(
+//     <div>
+//       <h2>Home</h2>
+//     </div>
+//   );
+// }
+
+// function About(){
+//   return(
+//     <div>
+//       <h2>About</h2>
+//     </div>
+//   );
+// }
+
+// function Dashboard(){
+//   return(
+//     <div>
+//       <h2>Dashboard</h2>
+//     </div>
+//   );
+// } 
+
